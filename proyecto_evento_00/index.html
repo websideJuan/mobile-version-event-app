@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pagina inicio: eventos</title>
+    <!--Link externos CDN y más-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+      }
+
+      .card-container {
+        display: flex;
+        gap: 20px;
+        padding: 15px 5px;
+      }
+
+      .card {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .card.w-f {
+        flex: 1 1 calc(25% - 20px);
+      }
+
+      .card a {
+        text-decoration: none;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card a.space-y {
+        gap: 10px;
+      }
+
+      h1 {
+        font-weight: bold;
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      h4 {
+        font-weight: 200;
+        font-size: 1em;
+      }
+
+      p {
+        color: #3333337f;
+        line-height: 1.6;
+        font-size: clamp(1rem, 2vw, 1.3rem);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="card">
+          <div
+            class="btn-navbar"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 5px 0;
+            "
+          >
+            <button
+              style="
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                margin-left: auto;
+              "
+            >
+              <a href="#">
+                <i class="fa-solid fa-bars fa-xl"></i>
+              </a>
+            </button>
+          </div>
+
+          <div
+            class="navbar-toggle"
+            style="
+              position: absolute;
+              inset: 0;
+              z-index: 99;
+              transform: translateY(-100%);
+            "
+          >
+            <ul
+              style="
+                width: calc(100vw - 10vw);
+                height: 100%;
+                color: white;
+                background-color: rgb(23, 23, 83);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+                list-style: none;
+                padding: 0;
+              "
+            >
+              <li>
+                <a
+                  href="/"
+                  class="navegation"
+                  style="text-decoration: none; color: white"
+                >
+                  <i class="fa-solid fa-house"></i> Inicio
+                </a>
+              </li>
+              <li>
+                <a
+                  href="evento.html"
+                  class="navegation"
+                  style="text-decoration: none; color: white"
+                >
+                  <i class="fa-solid fa-user"></i> Perfil
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="navegation"
+                  style="text-decoration: none; color: white"
+                >
+                  <i class="fa-solid fa-right-from-bracket"></i> Salir
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div
+        class="card"
+        style="
+          padding: 10px;
+          padding-top: 15px;
+          background-color: transparent;
+          border: 1px orangered solid;
+          position: relative;
+        "
+      >
+        <span
+          style="
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0 3px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: -15px;
+            background-color: #f4f4f4;
+          "
+        >
+          <span
+            style="
+              padding: 5px 11px;
+              background-color: orangered;
+              border-radius: 99px;
+              border: 1px orangered solid;
+            "
+          >
+            <i style="color: #f4f4f4" class="fa-solid fa-info"></i>
+          </span>
+        </span>
+        <p style="font-size: 0.8em; font-weight: 200; line-height: 1.4">
+          Recuerda llevar los ppt . Asegúrate de tener todo listo antes de la
+          fecha del evento
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <h1>App para eventos</h1>
+        <p>
+          Esta app facilita la gestión de eventos al permitir a los
+          organizadores crear eventos, registrar asistentes y actividades, y
+          enviar recordatorios. Utiliza el calendario del evento y la
+          información de los asistentes para mejorar la coordinación.
+        </p>
+
+        <button style="
+          background-color: orangered;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 1em;
+          margin-top: 20px;
+          transition: background-color 0.3s;">
+          <a
+            href="./src/pages/crear_evento/crear_evento.html"
+            style="text-decoration: none; color: #fff"
+          >
+            Crear evento
+          </a>
+        </button>
+      </div>
+    </div>
+
+    <div class="container" style="overflow-x:scroll">
+      <div class="card-container">
+        <div class="card w-f">
+          <a href="./src/pages/evento/evento.html" class="space-y">
+            <span>
+              <i
+                style="color: lightslategray"
+                class="fa-solid fa-calendar fa-lg"
+              ></i>
+            </span>
+            <h4>Evento</h4>
+          </a>
+        </div>
+
+        <div class="card w-f">
+          <a href="#" class="space-y">
+            <span>
+              <i
+
+                class="fa-solid fa-list-check fa-xl"
+              ></i>
+            </span>
+            <h4>Tareas</h4>
+          </a>
+        </div>
+
+        <div class="card w-f">
+          <a href="#" class="space-y">
+            <span>
+              <i style="color: lightslategray" class="fa-solid fa-users fa-xl"></i>
+            </span>
+            <h4>Asistentes</h4>
+          </a>
+        </div>
+
+        <div class="card w-f">
+          <a href="#" class="space-y">
+            <span>
+              <i style="color: lightslategray" class="fa-solid fa-clock fa-xl"></i>
+            </span>
+            <h4>Pendiente</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 style="color:#555555c2; margin-bottom: 2rem;">
+        Last events 
+      </h2>
+
+      <div>
+        <img style="width: 100%; height: 300px;" src="https://static.ptocdn.net/especiales/pls013_shakira/img/SHAKIRA-CHILE-VERTICAL.jpg" alt="">
+        <h5>Produce: FENIX ENTERTAINMENT </h5>
+      </div>
+    </div>
+  </body>
+  <script type="module" src="./main.js"></script>
+</html>

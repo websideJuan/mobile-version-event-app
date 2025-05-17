@@ -1,0 +1,12 @@
+[
+  {
+    "id": "45",
+    "nombre": "Maquina 45",
+    "tipo": "Horquilla",
+    "estado": "Operativa",
+    "fecha_ultima_mantenimiento": "2023-01-15",
+    "horas_trabajadas": 1200,
+    "patente": "JCKB-79",
+    "numero": "45"
+  }
+]
