@@ -7,7 +7,7 @@ function main() {
   const div = document.createElement("div");
 
   if (res.name === "undefined") {
-    notFound(div);
+    notFound(div, res);
   } else {
     View(div);
   }
@@ -19,7 +19,7 @@ function main() {
   document.body.appendChild(div);
 }
 
-function notFound(){
+function notFound(div, res) {
   div.innerHTML = `
       <code>{
          <br>code: '404',<br> 
@@ -28,7 +28,7 @@ function notFound(){
     `;
 }
 
-function View() {
+function View(div) {
   div.innerHTML = `
       <code>{
          <br>code: '200',<br> 
