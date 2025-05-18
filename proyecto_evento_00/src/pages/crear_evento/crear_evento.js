@@ -3,7 +3,7 @@ import { save, update } from "../../db/connect.js";
 
 function main() {
   const productoras = document.querySelectorAll(".selectProductora");
-  const btnSave = document.querySelector('#btnSave')
+  const btnSave = document.querySelector("#btnSave");
 
   productoras.forEach((productora) => {
     productora.addEventListener("click", (event) => {
@@ -13,6 +13,7 @@ function main() {
 
       const product = {
         name: productora.querySelector("h5").innerText,
+        image: productora.querySelector("img").src
       };
 
       save({
@@ -27,25 +28,34 @@ function main() {
             <h2 style="color:#555555c2; margin-bottom: 2rem;">
               Productora Seleccionada:
             </h2>
-            <p class="card">${product.name}</p>
+            <p class="card" style="display: flex; align-items: center;">
+              <img src="${product.image}" alt="Productora" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 1rem;"/>
+              ${product.name}
+            </p>
           </div>
           <div>
             <div class="card-container">
-              <div class="card w-f fecha_evento" onclick="event.target.classList.add('active')">
-                <span>Ingresa Inicio de Evento</span>
-                <div class="event-date" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.5); display: none;"> 
-                  <label for="startDate">Fecha de Inicio:</label>
-                  <input type="date" id="startDate" />
-                  <input type="time" id="startTime" />
-                  <input type="checkbox" id="startCheckbox" />
-                  <button id="startButton">Ingresar</button>
+              <div  style="text-align: center; cursor: pointer; font-weight: 900; color: #3333335c;" class="card w-f fecha_evento" onclick="event.target.classList.add('active')">
+                <span>Inicio</span>
+                <div class="event-date form-container" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.5); display: none;"> 
+                  
+                  <div class="form-group">
+                    <input type="date" id="startDate" />
+                  </div>
+                  <div class="form-group">
+                    <input type="time" id="startTime" />
+                  </div>
+
+                  <div class="form-group">
+                  <button class="btn" id="startButton">Ingresar</button>
+                  </div>
                 </div>
               </div>
 
-               <div class="card w-f fecha_evento" onclick="event.target.classList.add('active')">
-                <span>Ingresa Inicio de Evento</span>
+               <div style="text-align: center; cursor: pointer; font-weight: 900; color: #3333335c;" hover="display: none;"  class="card w-f fecha_evento" onclick="event.target.classList.add('active')">
+                <span>Final</span>
                 <div class="event-date form-container" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.5); display: none;"> 
-                  <h5>Fecha de Termino:</h5>
+                  
                   <div class="form-group">
                     <input type="date" id="endTimeDate" />
                   </div>
@@ -75,12 +85,11 @@ function main() {
         e.preventDefault();
         const startDate = document.querySelector("#startDate").value;
         const startTime = document.querySelector("#startTime").value;
-        const startCheckbox = document.querySelector("#startCheckbox").checked;
+        
 
         const startEvent = {
           startDate: startDate,
-          startTime: startTime,
-          startCheckbox: startCheckbox,
+          startTime: startTime
         };
 
         update({
@@ -92,12 +101,10 @@ function main() {
           if (card.classList.contains("active")) {
             card.classList.remove("active");
             card.innerHTML = `
-              <span>Evento Iniciado</span>
               <div class="event-date">
-                <h5>Fecha de Inicio:</h5>
-                <p>${startDate}</p>
-                <p>${startTime}</p>
-                
+                <span style="font-size: 2.5em; color: orangered;">Día</span>
+                <p style="font-size: 2.8em;">${startDate.split('-')[2]}</p>
+                <p style="font-weight: 100;">${startTime}</p>
               </div>
             `;
           }
@@ -123,19 +130,19 @@ function main() {
           if (card.classList.contains("active")) {
             card.classList.remove("active");
             card.innerHTML = `
-              <span>Evento Terminado</span>
-              <div class="event-date">
-                <h5>Fecha de Termino:</h5>
-                <p>${endTimeDate}</p>
-                <p>${endTimeHora}</p>
+              <div class="event-date" style="line-height: 1.5;">
+                <span style="font-size: 2.5em; color: orangered;">Día</span>
+                <p style="font-size: 2.8em;">${endTimeDate.split('-')[2]}</p>
+                <p style="font-weight: 100;">${endTimeHora}</p>
               </div>
             `;
           }
         });
       });
+
+      btnSave.style.pointerEvents = "none";
     });
   });
-
 
   btnSave.addEventListener("click", (e) => {
     e.preventDefault();

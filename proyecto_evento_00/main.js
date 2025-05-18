@@ -16,7 +16,6 @@ async function Initialize() {
   const links = document.querySelectorAll("a.navegation");
   const eventoActual = document.querySelector("#evento_actual");
 
-  
   // Check if the current event is not null
   if (data.eventos.evento_actual !== null) {
     eventoActual.style.display = "block";
@@ -24,7 +23,12 @@ async function Initialize() {
       <h2 style="color:#555555c2; margin-bottom: 2rem;">
         Evento Actual:
       </h2>
-      <p class="card" style="overflow-x: scroll;">${JSON.stringify(data.eventos.evento_actual)}</p>
+      <p class="card live_event">
+        <a style="display: initial;" href="/src/pages/evento_actual/evento_actual.html" class="navegation">${
+          "<i class='fa-solid fa-circle' style='color: yellowgreen;'></i> " +
+          data.eventos.evento_actual.name
+        }</a>
+      </p>
     `;
   }
 
@@ -45,7 +49,6 @@ async function Initialize() {
       };
     });
 
-
   links.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
@@ -56,4 +59,3 @@ async function Initialize() {
 
   console.log("Event Management System Initialized");
 }
-
