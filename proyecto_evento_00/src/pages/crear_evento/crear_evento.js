@@ -4,9 +4,12 @@ import { save, update } from "../../db/connect.js";
 function main() {
   const productoras = document.querySelectorAll(".selectProductora");
   const btnSave = document.querySelector("#btnSave");
+  btnSave.style.pointerEvents = "none";
+  btnSave.style.opacity = 0.5;
+
 
   productoras.forEach((productora) => {
-    productora.addEventListener("click", (event) => {
+    productora.addEventListener("click", () => {
       productoras.forEach((productora) => (productora.style.opacity = 0.5));
 
       productora.style.opacity = 1;
@@ -138,9 +141,11 @@ function main() {
             `;
           }
         });
+
+        btnSave.style.pointerEvents = "all";
+        btnSave.style.opacity = 1;
       });
 
-      btnSave.style.pointerEvents = "none";
     });
   });
 
