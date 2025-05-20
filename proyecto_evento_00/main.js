@@ -24,7 +24,7 @@ async function Initialize() {
         Evento Actual:
       </h2>
       <p class="card live_event">
-        <a style="display: initial;" href="/proyecto_evento_00/src/pages/evento/evento.html" class="navegation">${
+        <a style="display: initial;" href="./src/pages/evento/evento.html" class="navegation">${
           "<i class='fa-solid fa-circle' style='color: yellowgreen;'></i> " +
           data.eventos.evento_actual.name
         }</a>
@@ -32,8 +32,7 @@ async function Initialize() {
     `;
   }
 
-  const operarioCompleto = data.operarios
-    .filter((operario) => operario.id == 1)
+  const operarioCompleto = data.operarios.filter((operario) => operario.id == 1)
     .map((operario) => {
       const maquinas = data.maquinas.filter(
         (maquina) => maquina.operarioId == operario.id
