@@ -16,87 +16,88 @@
     <link rel="stylesheet" href="./main.css" />
   </head>
   <body>
-    <div class="container">
-      <nav style="margin-top: 30px">
-        <div class="card">
-          <div
-            class="btn-navbar"
+    
+    <nav style="background-color: #fff; padding: 20px 0; margin-bottom: 40px; box-shadow: 0 0px 4px 5px rgba(92, 90, 90, 0.1);">
+      <div class="container" style="margin-bottom: 0;">
+        <div
+          class="btn-navbar"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+          "
+        >
+          <button
+            id="btn-navbar-toggle"
             style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding: 5px 0;
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
+              margin-left: auto;
             "
           >
-            <button
-              style="
-                background-color: transparent;
-                border: none;
-                cursor: pointer;
-                margin-left: auto;
-              "
-            >
-              <a href="#">
-                <i class="fa-solid fa-bars fa-xl"></i>
-              </a>
-            </button>
-          </div>
-
-          <div
-            class="navbar-toggle"
-            style="
-              position: absolute;
-              inset: 0;
-              z-index: 99;
-              transform: translateY(-100%);
-            "
-          >
-            <ul
-              style="
-                width: calc(100vw - 10vw);
-                height: 100%;
-                color: white;
-                background-color: rgb(23, 23, 83);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                gap: 30px;
-                list-style: none;
-                padding: 0;
-              "
-            >
-              <li>
-                <a
-                  href="/"
-                  class="navegation"
-                  style="text-decoration: none; color: white"
-                >
-                  <i class="fa-solid fa-house"></i> Inicio
-                </a>
-              </li>
-              <li>
-                <a
-                  href="evento.html"
-                  class="navegation"
-                  style="text-decoration: none; color: white"
-                >
-                  <i class="fa-solid fa-user"></i> Perfil
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="navegation"
-                  style="text-decoration: none; color: white"
-                >
-                  <i class="fa-solid fa-right-from-bracket"></i> Salir
-                </a>
-              </li>
-            </ul>
-          </div>
+            <a href="#">
+              <i class="fa-solid fa-bars fa-2xl"></i>
+            </a>
+          </button>
         </div>
-      </nav>
-    </div>
+
+        <div
+          class="navbar-toggle"
+          style="
+            position: absolute;
+            inset: 0;
+            z-index: 99;
+            transform: translateY(-100%);
+          "
+        >
+          <ul
+            style="
+              width: calc(100vw - 10vw);
+              height: 100%;
+              color: white;
+              background-color: rgb(23, 23, 83);
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              gap: 30px;
+              list-style: none;
+              padding: 0;
+            "
+          >
+            <li>
+              <a
+                href="/"
+                class="navegation"
+                style="text-decoration: none; color: white"
+              >
+                <i class="fa-solid fa-house"></i> Inicio
+              </a>
+            </li>
+            <li>
+              <a
+                href="evento.html"
+                class="navegation"
+                style="text-decoration: none; color: white"
+              >
+                <i class="fa-solid fa-user"></i> Perfil
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="navegation"
+                style="text-decoration: none; color: white"
+              >
+                <i class="fa-solid fa-right-from-bracket"></i> Salir
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
 
     <div class="container">
       <div
@@ -176,43 +177,14 @@
               text-decoration: none;
             "
             >
-            <!-- <i class="fa-solid fa-plus"></i> -->
+            
               <i class="fa-solid fa-calendar-plus"></i>
               <span>Crear evento</span>
             </a
           >
         </button>
       </div>
-      <!-- <div class="card">
-        <h1>App para eventos</h1>
-        <p>
-          Esta app facilita la gestión de eventos al permitir a los
-          organizadores crear eventos, registrar asistentes y actividades, y
-          enviar recordatorios. Utiliza el calendario del evento y la
-          información de los asistentes para mejorar la coordinación.
-        </p>
-
-        <button
-          style="
-            background-color: orangered;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-          "
-        >
-          <a
-            href="./src/pages/crear_evento/crear_evento.html"
-            style="text-decoration: none; color: #fff"
-          >
-            Crear evento
-          </a>
-        </button>
-      </div> -->
+      
     </div>
 
     <div class="container" id="evento_actual"></div>

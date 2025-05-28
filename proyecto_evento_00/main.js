@@ -23,7 +23,7 @@ async function Initialize() {
       <h2 style="color:#555555c2; margin-bottom: 2rem;">
         Evento Actual:
       </h2>
-      <p class="card live_event">
+      <p class="card live_event" style="width: fit-content">
         <a style="display: initial;" href="./src/pages/evento/evento.html" class="navegation">${
           "<i class='fa-solid fa-circle' style='color: yellowgreen;'></i> " +
           data.eventos.evento_actual.name

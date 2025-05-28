@@ -2,9 +2,7 @@
 import { navegation } from "../../components/navbar/navbar.js";
 import { save, update } from "../../db/connect.js";
 
-document.log = function () {
-  console.log("Log function called");
-};
+
 function main() {
   const productoras = document.querySelectorAll(".selectProductora");
   const appContainer = document.querySelector("#appContainer");
@@ -16,16 +14,13 @@ function main() {
     productora.addEventListener("click", () => {
       productoras.forEach((productora) => (productora.style.opacity = 0.5));
 
-      const product = {
+
+      let product2 = {
         name: productora.querySelector("h5").innerText,
         image: productora.querySelector("img").src,
         moreInfo: []
       };
 
-      save({
-        nameData: "productora",
-        data: product,
-      });
 
       const div = document.createElement("div");
 
@@ -36,7 +31,7 @@ function main() {
       </h2>
       <p class="card" style="display: flex; align-items: center">
         <img
-          src="${product.image}"
+          src="${product2.image}"
           alt="Productora"
           style="
             width: 50px;
@@ -45,11 +40,11 @@ function main() {
             margin-right: 1rem;
           "
         />
-        ${product.name}
+        ${product2.name}
       </p>
     </div>
 
-    <div class="card-container">
+    <div class="card-container" style="align-items: flex-start;">
       <div
         style="
           text-align: center;
@@ -58,7 +53,7 @@ function main() {
           color: #3333335c;
         "
         class="card w-f fecha_evento"
-        onclick="event.target.classList.add('active')"
+        onclick="event.target.classList.contains('active') ? event.target.classList.remove('active') : event.target.classList.add('active')"
       >
         <span>Inicio</span>
         <div
@@ -75,7 +70,7 @@ function main() {
           "
         >
           <div class="form-group">
-            <input type="date" id="startDate" />
+            <input type="date" id="startDate" value="2025-05-27"/>
           </div>
           <div class="form-group">
             <input type="time" id="startTime" />
@@ -113,7 +108,7 @@ function main() {
           "
         >
           <div class="form-group">
-            <input type="date" id="endTimeDate" />
+            <input type="date" id="endTimeDate" value="2025-05-31"/>
           </div>
 
           <div class="form-group">
@@ -128,11 +123,12 @@ function main() {
     </div>
       `;
 
+      // Clear previous content and append new content
       const eventoActual = document.querySelector("#evento_actual");
-
       eventoActual.innerHTML = "";
       eventoActual.appendChild(div);
 
+      // Show the app container
       const endEvent = document.querySelector("#endEvent");
       const startButton = document.querySelector("#startButton");
 
@@ -141,15 +137,11 @@ function main() {
         const startDate = document.querySelector("#startDate").value;
         const startTime = document.querySelector("#startTime").value;
 
-        const startEvent = {
+        product2 = {
+          ...product2,
           startDate: startDate,
           startTime: startTime,
         };
-
-        update({
-          nameData: "productora",
-          data: startEvent,
-        });
 
         document.querySelectorAll(".fecha_evento").forEach((card) => {
           if (card.classList.contains("active")) {
@@ -170,20 +162,14 @@ function main() {
         const endTimeDate = document.querySelector("#endTimeDate").value;
         const endTimeHora = document.querySelector("#endTimeHora").value;
 
-        const endEvent = {
+        product2 = {
+          ...product2,
           endTimeDate: endTimeDate,
           endTimeHora: endTimeHora,
-          dias:
-            endTimeDate.split("-")[2] -
-            JSON.parse(localStorage.getItem("productora")).startDate.split(
-              "-"
-            )[2],
+          dias: endTimeDate.split("-")[2] - product2.startDate.split("-")[2],
+          startDate: product2.startDate,
         };
 
-        update({
-          nameData: "productora",
-          data: endEvent,
-        });
 
         document.querySelectorAll(".fecha_evento").forEach((card) => {
           if (card.classList.contains("active")) {
@@ -201,18 +187,20 @@ function main() {
         
         appContainer.innerHTML = `
         <div class="card-container" style="overflow-x: scroll; padding: .5rem; flex-wrap: wrap;">
-          ${Array.from(
-            { length: endEvent.dias },
+        ${Array.from(
+          { length: product2.dias + 1},
             (_, i) => {
               return `
-              <div class="card w-f active" onclick="log()">
+              <a href="#" style="text-decoration: none; color: inherit;">
+              <div class="card w-f addMoreInformation" >
                 <span">
                   Día
                 </span>
                 <p>${
-                  parseInt(endTimeDate.split("-")[2]) + i
+                  parseInt(product2.startDate.split("-")[2]) + i
                 }</p>
               </div>
+              </a>
               `;
             }
           ).join("")} 
@@ -225,6 +213,60 @@ function main() {
         btnSave.style.opacity = 1;
       });
 
+      appContainer.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!e.target.classList.contains("addMoreInformation")) return;
+        console.log(product2.moreInfo);
+        
+
+        const diaActual = e.target.querySelector("p").innerText;
+        const div = document.createElement("div");
+        const textArea = document.createElement("textarea");
+        const button = document.createElement("button");
+        button.innerText = "Guardar Información";
+        textArea.placeholder = "Información adicional del día";
+        textArea.style.width = "100%";
+
+        div.appendChild(textArea);
+        div.appendChild(button);
+        div.style.position = "absolute";
+        div.style.top = "50%";
+        div.style.left = "50%";
+        div.style.transform = "translate(-50%, -50%)";
+        div.style.backgroundColor = "white";
+        div.style.padding = "1rem";
+        div.style.borderRadius = "10px";
+        div.style.zIndex = "1000";
+        div.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
+        div.style.width = "300px";
+        div.style.maxWidth = "90%";
+        div.style.display = "flex";
+        div.style.flexDirection = "column";
+        div.style.gap = "1rem";
+        div.style.alignItems = "center";
+        div.style.justifyContent = "center";
+        div.style.backgroundColor = "rgba(255, 255, 255, 0.9)";
+        div.style.border = "1px solid #ccc";
+        div.style.borderRadius = "10px";
+        div.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+        document.body.appendChild(div);
+        textArea.focus();
+
+        button.addEventListener("click", () => {
+          if (textArea.value.trim() === "") {
+            alert("Por favor, ingresa información antes de guardar.");
+            return;
+          } 
+
+          product2.moreInfo.push({
+            dia: diaActual,
+            info: textArea.value,
+          });
+
+          localStorage.setItem("productora", JSON.stringify(product2));
+          div.remove();
+        });
+      })
     });
   });
 
