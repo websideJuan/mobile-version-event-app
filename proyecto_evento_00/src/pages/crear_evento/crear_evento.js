@@ -55,7 +55,9 @@ function main() {
         class="card w-f fecha_evento"
         onclick="event.target.classList.contains('active') ? event.target.classList.remove('active') : event.target.classList.add('active')"
       >
-        <span>Inicio</span>
+        <span> <i class="
+          fa-solid fa-calendar-days"
+        "></i> Inicio</span>
         <div
           class="event-date form-container"
           style="
@@ -93,7 +95,9 @@ function main() {
         class="card w-f fecha_evento"
         onclick="event.target.classList.add('active')"
       >
-        <span>Final</span>
+        <span><i class="
+          fa-solid fa-calendar-days"
+        "></i> Final</span>
         <div
           class="event-date form-container"
           style="
@@ -167,15 +171,21 @@ function main() {
           endTimeDate: endTimeDate,
           endTimeHora: endTimeHora,
           dias: endTimeDate.split("-")[2] - product2.startDate.split("-")[2],
-          startDate: product2.startDate,
+          moreInfo: Array.from({ length: 
+            endTimeDate.split("-")[2] - product2.startDate.split("-")[2] + 1
+           }, (_, index) => ({
+            dia: parseInt(product2.startDate.split("-")[2]) + index,
+            info: "No hay información",
+           })),
         };
 
 
+  
         document.querySelectorAll(".fecha_evento").forEach((card) => {
           if (card.classList.contains("active")) {
             card.classList.remove("active");
             card.innerHTML = `
-              <div class="event-date" style="line-height: 1.5;">
+              <div class="event-date">
                 <span style="font-size: 2.5em; color: orangered;">Día</span>
                 <p style="font-size: 2.8em;">${endTimeDate.split("-")[2]}</p>
                 <p style="font-weight: 100;">${endTimeHora}</p>
@@ -216,8 +226,6 @@ function main() {
       appContainer.addEventListener("click", (e) => {
         e.preventDefault();
         if (!e.target.classList.contains("addMoreInformation")) return;
-        console.log(product2.moreInfo);
-        
 
         const diaActual = e.target.querySelector("p").innerText;
         const div = document.createElement("div");
@@ -252,16 +260,15 @@ function main() {
         document.body.appendChild(div);
         textArea.focus();
 
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (e) => {
           if (textArea.value.trim() === "") {
             alert("Por favor, ingresa información antes de guardar.");
             return;
-          } 
+          }
 
-          product2.moreInfo.push({
-            dia: diaActual,
-            info: textArea.value,
-          });
+          const index = product2.moreInfo.findIndex((index) => index.dia === parseInt(diaActual));
+          product2.moreInfo[index].info = textArea.value;
+
 
           localStorage.setItem("productora", JSON.stringify(product2));
           div.remove();
@@ -277,11 +284,18 @@ function main() {
     const generalDB = JSON.parse(db);
 
     let productora = JSON.parse(localStorage.getItem("productora"));
+    const diaDelEvento = productora.moreInfo.find((info) => info.info.includes("show"));
 
+    if (diaDelEvento === undefined) {
+      alert("Por favor, selecciona un día del evento.");
+      return;
+    }
+    
     productora = {
       ...productora,
-      montaje: 23 - productora.startDate.split("-")[2],
-      desmontaje: productora.endTimeDate.split("-")[2] - 23,
+      montaje: parseInt(diaDelEvento.dia) - productora.startDate.split("-")[2],
+      desmontaje: productora.endTimeDate.split("-")[2] - parseInt(diaDelEvento.dia) ,
+      show: diaDelEvento === undefined ? diaDelEvento.dia : null 
     };
 
     generalDB.eventos.evento_actual = productora;

@@ -1,9 +1,13 @@
 import { connect } from "../../db/connect.js";
 
+
+
 // This function is called when the DOM is fully loaded
 async function main() {
   const res = await connect();
   const div = document.createElement("div");
+
+  
 
   if (res.eventos.evento_actual === null) {
     div.innerHTML = `
@@ -22,6 +26,12 @@ async function main() {
     document.body.appendChild(div);
     return;
   }
+
+  document.head.querySelector("title").textContent =
+    document.head.querySelector("title").textContent.split(":")[0] +
+    " : " +
+    res.eventos.evento_actual.name;
+
   view({ div, res });
 
   document.body.appendChild(div);
@@ -34,33 +44,23 @@ function view({ div, res }) {
   const totalDias = diaTermino - diaInicio;
   const diaActual = new Date().getDate().toString();
 
-  const dias = {};
+  
 
-  document.head.querySelector("title").textContent =
-    document.head.querySelector("title").textContent.split(":")[0] +
-    " : " +
-    res.eventos.evento_actual.name;
 
-  for (let i = 0; i <= totalDias; i++) {
-    dias[parseInt(diaInicio) + i] = {
-      dia: parseInt(diaInicio) + i,
-      montaje: 23 - diaInicio,
-      desmontaje: diaTermino - 23,
-    };
-  }
-
-  div.innerHTML += `
+  div.innerHTML = `
     <div style="background-color: white; padding: 1rem; margin-bottom: 2rem; border: 1px solid #cccccc8a; position: relative; display: flex; flex-direction: column; align-items: center;">    
     <img src=${
       res.eventos.evento_actual.image
     } style="width: 150px; border-radius: 999px;" />
-        <p class="card" style="position: absolute; bottom: -10%; gap: 1rem; padding: .8rem 1.5rem; display: flex; align-items: center">
-          <i class="fa-solid fa-circle" style="color: yellowgreen;"></i>
+        <div class="card" style="position: absolute; bottom: -10%; gap: 1rem; padding: .8rem 1.5rem; display: flex; flex-direction: row; align-items: center">
+          <p><i class="fa-solid fa-circle" style="color: yellowgreen;"></i></p>
           <a href="../evento/evento.html" >  
             ${res.eventos.evento_actual.name}
           </a>
+          <button id="btnOptions" style="width: 30px; height: 30px; color: #555555c2; background-color: transparent; border: none; cursor: pointer;">
           <i class="fa-solid fa-ellipsis-vertical"></i>
-        </p>
+          </button>
+        </div>
     </div> 
 
     <div class="container">
@@ -70,17 +70,17 @@ function view({ div, res }) {
             </h2>
 
             <div class="card-container" style="overflow-x: scroll">
-              ${Object.values(dias)
-                .map((dia) => {
+              ${res.eventos.evento_actual.moreInfo
+                .map((calendario) => {
                   return `
-                  <a href="#" style="text-decoration: none; color: inherit;">
-                    <div data-id="${dia.dia}" class="card" style="display: flex; flex-direction: column; align-items: center; gap: 5px; padding: .5rem 1.2rem;">
+                 
+                    <div data-id="${calendario.dia}" class="card" style=" pointer-events: all; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: .5rem 1.2rem;">
                       <i class="fa-solid fa-calendar-days"></i>
-                      <span style="font-size="1.5em" font-weight: 600; color:rgba(85, 85, 85, 0.55);">
-                        ${dia.dia}
+                      <span style="pointer-events: none; font-size="1.5em" font-weight: 600; color:rgba(85, 85, 85, 0.55);">
+                        ${calendario.dia}
                       </span>
                     </div>
-                  </a>
+               
                     `;
                 })
                 .join("")}
@@ -93,25 +93,36 @@ function view({ div, res }) {
     </div>
   `;
 
+  const btnOptions = div.querySelector("#btnOptions");
+
+  btnOptions.addEventListener("click", () => changeOption());
+
+
   const diasElement = div.querySelectorAll(".card-container div[data-id]");
   const cardHoras = div.querySelector(".card-horas");
   const data = res.eventos.evento_actual.moreInfo;
 
   diasElement.forEach((dia, i) => {
-    const arrdias = [...diasElement].map((element) =>
-      element.getAttribute("data-id")
-    );
+    const arrdias = [...diasElement].map((element) => element.getAttribute("data-id"));
 
-    if (!arrdias.includes(diaActual)) {
+    if (!arrdias.includes(diaActual) ) {
       diasElement[0].classList.add("active");
+      cardHoras.innerHTML = `
+        <div id="horas-${i}" style="margin-bottom: 1rem;">
+          <i class="fa-solid fa-clock"></i>
+          <span>No hay informacion que mostrar</span>
+          <br>
+        </div>
+      `;
     }
 
     if (dia.dataset.id == diaActual) {
-      dia.classList.add("active");
+      dia.classList.add("active"); 
 
       const infoActual = data.find((info) => info.dia == diaActual);
 
-      cardHoras.innerHTML += `
+      
+      cardHoras.innerHTML = `
       <div id="horas-${i}" style="margin-bottom: 1rem;">
         <i class="fa-solid fa-clock"></i>
         <span>${infoActual.info}</span>
@@ -148,6 +159,37 @@ function view({ div, res }) {
       }
     });
   });
+}
+
+
+function changeOption() {
+  const passAdmin = "1234"; // Contraseña de administrador
+  console.log("Change option clicked");
+
+  const res = prompt("¿Desea eliminar el evento actual? (si/no)");
+
+  if (res === null || res === "") {
+    console.log("No se ingreso ninguna opcion");
+    return;
+  }
+
+  if (res === 'si') {
+    const pass = prompt('Ingrese la contraseña para continuar:')
+    if (pass === passAdmin) {
+      console.log("Contraseña correcta, eliminando evento actual...");
+      const db = JSON.parse(localStorage.getItem("db"));
+      db.eventos.evento_actual = null; // Eliminar el evento actual
+      localStorage.setItem("db", JSON.stringify(db)); // Guardar los cambios en el localStorage
+      alert("Evento actual eliminado correctamente.");
+      window.location.href = "/proyecto_evento_00/src/pages/crear_evento/crear_evento.html"; // Redirigir a la página de creación de eventos
+    } else {
+      console.log("Contraseña incorrecta, no se puede eliminar el evento actual.");
+      alert("Contraseña incorrecta, no se puede eliminar el evento actual.");
+      return;
+    }
+  }
+  
+  
 }
 
 window.addEventListener("DOMContentLoaded", main);

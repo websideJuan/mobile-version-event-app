@@ -15,6 +15,30 @@ async function Initialize() {
   const data = await connect();
   const links = document.querySelectorAll("a.navegation");
   const eventoActual = document.querySelector("#evento_actual");
+  const containerBanner = document.querySelector("#containerBanner")
+
+  // Check if the data is loaded
+  data.eventos.eventos.forEach((evento) => {
+    const card = document.createElement("div");
+
+    card.style.position = "relative";
+    card.style.marginBottom = "3rem";
+    card.innerHTML = `
+      <img src="${evento.imagen}" alt="${evento.nombre}" style="width: 100%; height: 300px; object-fit: cover;"/>
+      <div class="card" style="background-color: white; position: absolute; left: 5%; right: 5%; bottom: -30px; background-color:  color: white; padding: 1rem;">
+        <h3>${evento.nombre}</h3>
+        <p>
+          <i class="fa-solid fa-calendar-days"></i> ${evento.fecha} - ${evento.hora}
+        </p>
+        <span>
+          <i class="fa-solid fa-location-dot"></i> ${evento.lugar}
+        </span>
+        <a href="./src/pages/evento/evento.html" class="navegation">Ver Evento</a>
+      </div>
+    `;
+    containerBanner.appendChild(card);
+  });
+
 
   // Check if the current event is not null
   if (data.eventos.evento_actual !== null) {
