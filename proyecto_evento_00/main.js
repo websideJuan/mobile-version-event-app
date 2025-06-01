@@ -1,5 +1,6 @@
 import { navegation } from "./src/components/navbar/navbar.js";
 import { connect } from "./src/db/connect.js";
+
 /*
   Initial code for a simple event management system.
 */
@@ -16,6 +17,38 @@ async function Initialize() {
   const links = document.querySelectorAll("a.navegation");
   const eventoActual = document.querySelector("#evento_actual");
   const containerBanner = document.querySelector("#containerBanner")
+
+  Object.keys(data).map(async (key, i) => {
+    const res = await fetch(`./src/db/${key}.json`)
+    let newDataJson = await res.json();
+    let lastData = data[key];
+
+    if (key === "eventos") {
+      newDataJson = newDataJson.eventos
+      lastData = lastData.eventos;
+    }
+
+
+    // Compare the new data with the last data
+    const stringNewData = JSON.stringify(newDataJson)
+    const stringLastData = JSON.stringify(lastData)
+    
+    if (stringNewData !== stringLastData) {
+      console.log(`Data for ${key} has been updated.`);
+      data[key] = newDataJson
+  
+      if (key === "eventos") {
+      data[key] = {
+        evento_actual: null,
+        eventos : data[key]
+      }}
+    
+      
+      localStorage.setItem('db', JSON.stringify(data)); 
+    }
+  })
+  
+
 
   // Check if the data is loaded
   data.eventos.eventos.forEach((evento) => {
@@ -44,14 +77,17 @@ async function Initialize() {
   if (data.eventos.evento_actual !== null) {
     eventoActual.style.display = "block";
     eventoActual.innerHTML = `
-      <h2 style="color:#555555c2; margin-bottom: 2rem;">
+      <h2>
         Evento Actual:
       </h2>
-      <p class="card live_event" style="width: fit-content">
-        <a style="display: initial;" href="./src/pages/evento/evento.html" class="navegation">${
-          "<i class='fa-solid fa-circle' style='color: yellowgreen;'></i> " +
-          data.eventos.evento_actual.name
-        }</a>
+      <p class="card live_event" style="width: fit-content;">
+        <a href="./src/pages/evento/evento.html" class="navegation" style="flex-direction: row; gap: 1rem; "> 
+          <img src="${data.eventos.evento_actual.image}" alt="${data.eventos.evento_actual.name}" style="width: 50px; height: 50px; border-radius: 999px" />
+          
+          <span style="color: #555555c2; font-weight: 300; font-size: .9em;">${data.eventos.evento_actual.name}</span>
+
+          
+        </a>
       </p>
     `;
   }

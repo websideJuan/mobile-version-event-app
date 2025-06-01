@@ -13,16 +13,12 @@ export const connect = async () => {
 
     operarios.forEach((operario) => {
       operario.id = operario.id;
-      operario.createdAt = new Date();
-      operario.updatedAt = new Date();
+
     });
 
     maquinas.forEach((maquina) => {
-      maquina.createdAt = new Date();
-      maquina.updatedAt = new Date();
-      maquina.operarioId = operarios.filter(
-        (operario) => operario.maquina === maquina.id
-      )[0].id;
+      
+      maquina.operarioId = 0
     });
 
     const data = {

@@ -17,7 +17,7 @@
   </head>
   <body>
     
-    <nav style="background-color: #fff; padding: 20px 0; margin-bottom: 40px; box-shadow: 0 0px 4px 5px rgba(92, 90, 90, 0.1);">
+    <nav style="background-color: #fff; padding: 20px 0; margin-bottom: 40px;">
       <div class="container" style="margin-bottom: 0;">
         <div
           class="btn-navbar"
@@ -28,6 +28,18 @@
             padding: 5px 0;
           "
         >
+          
+          <span
+            style="
+              font-weight: 600;
+              color: #333;
+              margin-left: 10px;
+            "
+          >
+            Eventos
+          </span>
+
+          
           <button
             id="btn-navbar-toggle"
             style="
@@ -38,7 +50,7 @@
             "
           >
             <a href="#">
-              <i class="fa-solid fa-bars fa-2xl"></i>
+              <i class="fa-solid fa-bars fa-xl" style="color: #333;"></i>
             </a>
           </button>
         </div>
@@ -99,83 +111,34 @@
     </nav>
     
     
-
-    <!-- <div class="container">
-      <div
-        class="card"
-        style="
-          padding: 10px;
-          padding-top: 15px;
-          background-color: transparent;
-          border: 1px orangered solid;
-          position: relative;
-        "
-      >
-        <span
-          style="
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 0 3px;
-            margin-bottom: 20px;
-            position: absolute;
-            top: -15px;
-            background-color: #f4f4f4;
-          "
-        >
-          <span
-            style="
-              padding: 5px 11px;
-              background-color: orangered;
-              border-radius: 99px;
-              border: 1px orangered solid;
-            "
-          >
-            <i style="color: #f4f4f4" class="fa-solid fa-info"></i>
-          </span>
-        </span>
-        <p style="font-size: 0.8em; font-weight: 200; line-height: 1.4">
-          Recuerda llevar los ppt . Asegúrate de tener todo listo antes de la
-          fecha del evento
-        </p>
-      </div>
-    </div> -->
-
     <div class="container">
-      <div
-        class="card"
-        style=" max-width: 600px; margin: 0 auto; padding: 30px; "
-      >
-        <h1 style="font-size: 2.5em; color: #333; text-align: left;">
-          Gestion de eventos
-        </h1>
-       
+      <div class="card" style="padding: 0; overflow: hidden; text-align: center; margin-bottom: 20px;">
+        <p style="display: flex; align-items: center; justify-content: center; padding: 20px;color: #333;">
+          <i class="fa-solid fa-calendar"></i>
+          <span style="font-weight: 300;">Eventos</span>
+        </p>
         <button
           style="
-            background-color: #ff6347;
-            color: #fff;
+            width: 100%;
             padding: 12px 24px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 1.2em;
-            margin-top: 20px;
-            transition: background-color 0.3s;
+            
+            background-color: #ffffff;
+            border-top: 01px solid #ccc;
           "
         >
           <a
             href="./src/pages/crear_evento/crear_evento.html"
             style="
               text-decoration: none;
-              color: #fff; 
               display: flex;
               align-items: center;
               gap: 10px;
+              color: #3333338a;
               text-decoration: none;
             "
             >
-            
-              <i class="fa-solid fa-calendar-plus"></i>
               <span>Crear evento</span>
             </a
           >
@@ -187,61 +150,56 @@
     <div class="container" id="evento_actual"></div>
 
     <div style="margin-top: 2.5rem;">
-      <div class="card-container" style="padding: 4rem 3rem; overflow-x: scroll; padding-top: 0px; scrollbar-width: none; ">
-        <div class="card w-f">
+      <h2 class="container">
+        Eventos en curso
+      </h2>
+      <div class="card-container" style="padding: 4rem; overflow-x: scroll; padding-top: 0px; scrollbar-width: none; ">
+        <div class="card w-f" style="padding: .8rem;">
           <a href="./src/pages/evento/evento.html" class="space-y">
             <span>
               <i
-                style="color: lightslategray"
                 class="fa-solid fa-calendar fa-lg"
               ></i>
             </span>
-            <h4>Evento</h4>
+            <span>Evento</span>
           </a>
         </div>
 
-        <div class="card w-f">
+        <div class="card w-f" style="padding: .8rem;">
           <a href="#" class="space-y">
             <span>
-              <i class="fa-solid fa-list-check fa-xl"></i>
+              <i class="fa-solid fa-list-check fa-lg"></i>
             </span>
-            <h4>Tareas</h4>
+            <span>Tareas</span>
           </a>
         </div>
 
-        <div class="card w-f">
-          <a href="#" class="space-y">
-            <span>
-              <i
-                style="color: lightslategray"
-                class="fa-solid fa-users fa-xl"
-              ></i>
-            </span>
-            <h4>Asistentes</h4>
-          </a>
-        </div>
-
-        <div class="card w-f">
+        <div class="card w-f" style="padding: .8rem;">
           <a href="#" class="space-y">
             <span>
               <i
-                style="color: lightslategray"
-                class="fa-solid fa-clock fa-xl"
+                class="fa-solid fa-users fa-lg"
               ></i>
             </span>
-            <h4>Pendiente</h4>
+            <span>Asistentes</span>
+          </a>
+        </div>
+
+        <div class="card w-f" style="padding: .8rem;">
+          <a href="#" class="space-y">
+            <span>
+              <i
+                class="fa-solid fa-clock fa-lg"
+              ></i>
+            </span>
+            <span>Pendiente</span>
           </a>
         </div>
       </div>
     </div>
 
     <div class="banner-container" id="containerBanner" style="margin-bottom: 20px;">
-      <h2 style="
-        font-size: 1.5em;
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
-      ">Eventos terminados</h2>
+      <h2 class="container">Eventos terminados</h2>
     </div>
 
     

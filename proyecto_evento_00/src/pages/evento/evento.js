@@ -199,7 +199,7 @@ function changeOption() {
       db.eventos.evento_actual = null; // Eliminar el evento actual
       localStorage.setItem("db", JSON.stringify(db)); // Guardar los cambios en el localStorage
       alert("Evento actual eliminado correctamente.");
-      window.location.href = "/proyecto_evento_00/src/pages/crear_evento/crear_evento.html"; // Redirigir a la página de creación de eventos
+      window.location.href = "./proyecto_evento_00/src/pages/crear_evento/crear_evento.html"; // Redirigir a la página de creación de eventos
     } else {
       console.log("Contraseña incorrecta, no se puede eliminar el evento actual.");
       alert("Contraseña incorrecta, no se puede eliminar el evento actual.");
