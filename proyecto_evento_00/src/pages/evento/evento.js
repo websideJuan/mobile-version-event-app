@@ -63,24 +63,26 @@ function view({ div, res }) {
         </div>
     </div> 
 
-    <div class="container">
+    <div class="">
         <div>
             <h2 style="color:#555555c2; margin-bottom: 1rem;">
               Dias de Evento
             </h2>
 
-            <div class="card-container" style="overflow-x: scroll">
+            <div class="card-container" style="overflow-x: auto; scrollbar-width: none; padding: 0 2rem;">
               ${res.eventos.evento_actual.moreInfo
                 .map((calendario) => {
                   return `
-                 
-                    <div data-id="${calendario.dia}" class="card" style=" pointer-events: all; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: .5rem 1.2rem;">
-                      <i class="fa-solid fa-calendar-days"></i>
-                      <span style="pointer-events: none; font-size="1.5em" font-weight: 600; color:rgba(85, 85, 85, 0.55);">
-                        ${calendario.dia}
-                      </span>
+                    <div data-id="${calendario.dia}" class="diasDeEvento" style=" border: 1px solid #cccccc8a; border-top: none; border-radius: 10px; ">
+                      <div  class="card" style="padding: .3rem 1rem; text-align: center;">
+                        ${createDeyOfWeek(calendario.dia)}
+                      </div>
+                      <div style=" display: flex; flex-direction: column; align-items: center; gap: 5px; padding: .5rem 1.2rem;">
+                        <div style=" font-size:1.5em; font-weight: 600; color:rgba(85, 85, 85, 0.55);">
+                          ${calendario.dia}
+                        </div>
+                      </div>
                     </div>
-               
                     `;
                 })
                 .join("")}
@@ -107,10 +109,13 @@ function view({ div, res }) {
 
     if (!arrdias.includes(diaActual) ) {
       diasElement[0].classList.add("active");
+
+      const infoActual = data.find((info) => info.dia == diasElement[0].dataset.id);
+
       cardHoras.innerHTML = `
         <div id="horas-${i}" style="margin-bottom: 1rem;">
           <i class="fa-solid fa-clock"></i>
-          <span>No hay informacion que mostrar</span>
+          <span>${infoActual.info}</span>
           <br>
         </div>
       `;
@@ -125,7 +130,12 @@ function view({ div, res }) {
       cardHoras.innerHTML = `
       <div id="horas-${i}" style="margin-bottom: 1rem;">
         <i class="fa-solid fa-clock"></i>
-        <span>${infoActual.info}</span>
+        <span>${infoActual.info}</span> <br>
+        <i class="fa-solid fa-truck"></i>
+        <span>Cantidad de gruas: ${infoActual.gruas}</span>
+        <br>
+        <i class="fa-solid fa-user"></i>
+        <span>Operario: ${infoActual.operario ? infoActual.operario : 'Aldo'}</span>
         <br>
       </div>
     `;
@@ -136,30 +146,38 @@ function view({ div, res }) {
       dia.classList.add("active");
 
       const id = event.target.getAttribute("data-id");
-
+      
+      console.log("id", id);
+      
+      
       const moreInfo = data.find((info) => info.dia == id);
 
-      if (moreInfo === undefined) {
-        cardHoras.innerHTML = `
-          <div id="horas-${i}" style="margin-bottom: 1rem;">
-            <i class="fa-solid fa-clock"></i>
-            <span>No hay mas informacion</span>
-            <br>
-          </div>
-        `;
-        return;
-      } else {
-        cardHoras.innerHTML = `
+      cardHoras.innerHTML = `
           <div id="horas-${i}">
             <i class="fa-solid fa-clock"></i>
             <span>${moreInfo.info}</span>
+    
+            <br>
+            <i class="fa-solid fa-truck"></i>
+            <span>Cantidad de gruas: ${moreInfo.gruas}</span>
+            <br>
+            <i class="fa-solid fa-user"></i>
+            <span>Operario: ${moreInfo.operario ? moreInfo.operario : 'Aldo'}</span>
             <br>
           </div>
         `;
-      }
     });
   });
 }
+
+function createDeyOfWeek(date) {
+  const daysOfWeek = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+  const dayOfString = `2025-${new Date().getMonth() + 1}-${date}`; // Formato de fecha YYYY-MM-DD
+  const day = new Date(dayOfString).getDay(); // 
+
+  return daysOfWeek[day]; // Devuelve el nombre del día de la semana
+}
+
 
 
 function changeOption() {

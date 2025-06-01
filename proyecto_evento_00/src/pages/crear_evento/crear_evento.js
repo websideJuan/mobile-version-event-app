@@ -201,6 +201,7 @@ function main() {
           { length: product2.dias + 1},
             (_, i) => {
               return `
+              <span>Lunes</span>
               <a href="#" style="text-decoration: none; color: inherit;">
               <div class="card w-f addMoreInformation" >
                 <span">
@@ -231,6 +232,7 @@ function main() {
         const div = document.createElement("div");
         const textArea = document.createElement("textarea");
         const button = document.createElement("button");
+        const input = document.createElement("input");
         button.innerText = "Guardar Información";
         textArea.placeholder = "Información adicional del día";
         textArea.style.width = "100%";
@@ -259,6 +261,16 @@ function main() {
         div.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
         document.body.appendChild(div);
         textArea.focus();
+        input.type = 'text'
+        input.placeholder = "Cantidad de gruas";
+        input.style.width = "100%";
+        input.style.marginBottom = "1rem";
+        input.style.padding = "0.5rem";
+        input.style.border = "1px solid #ccc";
+        input.style.borderRadius = "5px";
+        input.required = true;
+
+        div.appendChild(input);
 
         button.addEventListener("click", (e) => {
           if (textArea.value.trim() === "") {
@@ -268,6 +280,7 @@ function main() {
 
           const index = product2.moreInfo.findIndex((index) => index.dia === parseInt(diaActual));
           product2.moreInfo[index].info = textArea.value;
+          product2.moreInfo[index].gruas = input.value;
 
 
           localStorage.setItem("productora", JSON.stringify(product2));
