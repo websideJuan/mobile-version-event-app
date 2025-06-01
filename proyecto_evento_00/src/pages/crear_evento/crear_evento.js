@@ -201,7 +201,7 @@ function main() {
           { length: product2.dias + 1},
             (_, i) => {
               return `
-              <span>Lunes</span>
+             
               <a href="#" style="text-decoration: none; color: inherit;">
               <div class="card w-f addMoreInformation" >
                 <span">
@@ -238,6 +238,8 @@ function main() {
         textArea.style.width = "100%";
 
         div.appendChild(textArea);
+        div.appendChild(input);
+
         div.appendChild(button);
         div.style.position = "absolute";
         div.style.top = "50%";
@@ -270,7 +272,6 @@ function main() {
         input.style.borderRadius = "5px";
         input.required = true;
 
-        div.appendChild(input);
 
         button.addEventListener("click", (e) => {
           if (textArea.value.trim() === "") {

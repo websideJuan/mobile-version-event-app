@@ -25,7 +25,7 @@ async function Initialize() {
     card.style.marginBottom = "3rem";
     card.innerHTML = `
       <img src="${evento.imagen}" alt="${evento.nombre}" style="width: 100%; height: 300px; object-fit: cover;"/>
-      <div class="card" style="background-color: white; position: absolute; left: 5%; right: 5%; bottom: -30px; background-color:  color: white; padding: 1rem;">
+      <div class="card" style="background-color: white; position: absolute; left: 10%; right: 10%; bottom: -30px; background-color:  color: white; padding: 1rem;">
         <h3>${evento.nombre}</h3>
         <p>
           <i class="fa-solid fa-calendar-days"></i> ${evento.fecha} - ${evento.hora}
